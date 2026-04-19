@@ -1,0 +1,360 @@
+/* ===========================
+   Progress & Routine Tracker
+   =========================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:          #0f172a;
+  --surface:     #1e293b;
+  --surface2:    #273549;
+  --border:      #334155;
+  --accent:      #6366f1;
+  --accent-dark: #4f46e5;
+  --success:     #22c55e;
+  --warning:     #f59e0b;
+  --danger:      #ef4444;
+  --text:        #f1f5f9;
+  --text-muted:  #94a3b8;
+  --radius:      12px;
+  --radius-sm:   8px;
+  --shadow:      0 4px 24px rgba(0,0,0,.4);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ---- Layout ---- */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+#today-date {
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  gap: 2rem;
+}
+
+/* ---- Stats bar ---- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.stat-card .label {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+}
+
+.stat-card .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-card .sub {
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+/* ---- Section headings ---- */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ---- Habit tracker ---- */
+.habits-list {
+  display: grid;
+  gap: .75rem;
+}
+
+.habit-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color .2s;
+}
+
+.habit-item:hover {
+  border-color: var(--accent);
+}
+
+.habit-meta {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.habit-name {
+  font-weight: 500;
+}
+
+.habit-streak {
+  font-size: .75rem;
+  color: var(--warning);
+}
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.progress-bar {
+  width: 140px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width .4s ease;
+}
+
+.progress-label {
+  font-size: .75rem;
+  color: var(--text-muted);
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+.habit-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* ---- Task list ---- */
+.tasks-list {
+  display: grid;
+  gap: .6rem;
+}
+
+.task-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  transition: opacity .2s, border-color .2s;
+}
+
+.task-item.done {
+  opacity: .55;
+}
+
+.task-item.done .task-label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-item:hover {
+  border-color: var(--accent);
+}
+
+.task-label {
+  flex: 1;
+  font-size: .9rem;
+}
+
+.task-category {
+  font-size: .7rem;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.cat-health    { background: #14532d; color: #86efac; }
+.cat-work      { background: #1e3a5f; color: #93c5fd; }
+.cat-learning  { background: #3b0764; color: #d8b4fe; }
+.cat-personal  { background: #431407; color: #fdba74; }
+.cat-other     { background: #1e293b; color: #94a3b8; }
+
+/* ---- Forms / inputs ---- */
+.add-form {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+.add-form input,
+.add-form select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: .5rem .75rem;
+  font-size: .85rem;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.add-form input:focus,
+.add-form select:focus {
+  border-color: var(--accent);
+}
+
+.add-form input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+}
+
+.add-form select option {
+  background: var(--surface);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: .5rem .9rem;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  transition: opacity .2s, filter .2s;
+}
+
+.btn:hover { filter: brightness(1.15); }
+.btn:active { filter: brightness(.9); }
+
+.btn-primary  { background: var(--accent);  color: #fff; }
+.btn-success  { background: var(--success); color: #fff; }
+.btn-danger   { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+.btn-danger:hover  { background: #7f1d1d22; border-color: var(--danger); color: var(--danger); }
+.btn-ghost    { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+.btn-ghost:hover   { border-color: var(--accent); color: var(--accent); }
+
+.btn-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+  color: transparent;
+  font-size: .8rem;
+}
+
+.btn-check.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+/* ---- Overall progress ring ---- */
+.ring-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.ring-svg circle {
+  transition: stroke-dashoffset .6s ease;
+}
+
+.ring-info h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ring-info p {
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+/* ---- Empty states ---- */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-size: .9rem;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  header { padding: .75rem 1rem; }
+  main { padding: 1rem; }
+  .progress-bar { width: 90px; }
+  .ring-wrap { flex-direction: column; }
+}

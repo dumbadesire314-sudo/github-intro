@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress &amp; Routine Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>📈 Progress &amp; Routine Tracker</h1>
+  <span id="today-date"></span>
+</header>
+
+<main>
+
+  <!-- ── Stats bar ── -->
+  <section class="stats-grid" aria-label="Summary statistics">
+    <div class="stat-card">
+      <span class="label">Habits today</span>
+      <span class="value" id="stat-habits-done">0</span>
+      <span class="sub" id="stat-habits-total">of 0 completed</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Tasks today</span>
+      <span class="value" id="stat-tasks-done">0</span>
+      <span class="sub" id="stat-tasks-total">of 0 completed</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Best streak 🔥</span>
+      <span class="value" id="stat-best-streak">0</span>
+      <span class="sub">days in a row</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Overall score</span>
+      <span class="value" id="stat-score">0%</span>
+      <span class="sub">today's progress</span>
+    </div>
+  </section>
+
+  <!-- ── Overall progress ring ── -->
+  <section class="ring-wrap" aria-label="Overall daily progress">
+    <svg class="ring-svg" width="100" height="100" viewBox="0 0 100 100"
+         aria-hidden="true">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="10"/>
+      <circle id="ring-progress" cx="50" cy="50" r="40" fill="none"
+              stroke="#6366f1" stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="251.2"
+              stroke-dashoffset="251.2"
+              transform="rotate(-90 50 50)"/>
+    </svg>
+    <div class="ring-info">
+      <h3 id="ring-pct">0%</h3>
+      <p>Daily completion</p>
+      <p id="ring-sub" style="margin-top:.25rem"></p>
+    </div>
+  </section>
+
+  <!-- ── Habit Tracker ── -->
+  <section aria-label="Habit tracker">
+    <div class="section-header">
+      <h2>🗓️ Daily Habits</h2>
+      <button class="btn btn-ghost" id="btn-toggle-add-habit">+ Add habit</button>
+    </div>
+
+    <div id="add-habit-form" class="add-form" style="display:none; margin-bottom:1rem;" aria-label="Add habit form">
+      <input type="text" id="habit-name-input" placeholder="Habit name (e.g. Exercise)" maxlength="60" />
+      <input type="number" id="habit-goal-input" placeholder="Daily goal (times)" min="1" max="99" value="1" style="width:130px" />
+      <button class="btn btn-primary" id="btn-add-habit">Add</button>
+      <button class="btn btn-ghost" id="btn-cancel-habit">Cancel</button>
+    </div>
+
+    <div class="habits-list" id="habits-list">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ── Today's Tasks ── -->
+  <section aria-label="Today's tasks">
+    <div class="section-header">
+      <h2>✅ Today's Tasks</h2>
+      <button class="btn btn-ghost" id="btn-toggle-add-task">+ Add task</button>
+    </div>
+
+    <div id="add-task-form" class="add-form" style="display:none; margin-bottom:1rem;" aria-label="Add task form">
+      <input type="text" id="task-name-input" placeholder="Task description" maxlength="100" />
+      <select id="task-cat-input">
+        <option value="work">Work</option>
+        <option value="health">Health</option>
+        <option value="learning">Learning</option>
+        <option value="personal">Personal</option>
+        <option value="other">Other</option>
+      </select>
+      <button class="btn btn-primary" id="btn-add-task">Add</button>
+      <button class="btn btn-ghost" id="btn-cancel-task">Cancel</button>
+    </div>
+
+    <div class="tasks-list" id="tasks-list">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
